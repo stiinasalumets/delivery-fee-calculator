@@ -1,6 +1,6 @@
-package com.dfc.deliveryfeecalculator.repository;
+package com.dfc.deliveryfeecalculator.WeatherInfo;
 
-import com.dfc.deliveryfeecalculator.model.WeatherInfo;
+import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

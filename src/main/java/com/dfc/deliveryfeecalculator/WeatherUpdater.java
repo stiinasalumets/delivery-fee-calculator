@@ -2,19 +2,20 @@ package com.dfc.deliveryfeecalculator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@SpringBootApplication
-public class DeliveryFeeCalculatorApplication {
+@Component
+@EnableScheduling
+public class WeatherUpdater {
 
     Logger logger = LoggerFactory.getLogger(DeliveryFeeCalculatorApplication.class);
 
-    public static void main(String[] args) {
-        SpringApplication.run(DeliveryFeeCalculatorApplication.class, args);
+    @Scheduled(cron = "0 15 * * * *")
+    public void computePrice() throws InterruptedException {
+        logger.info("Current date" + new Date());
     }
 }

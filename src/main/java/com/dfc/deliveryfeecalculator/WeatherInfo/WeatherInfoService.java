@@ -1,23 +1,25 @@
-package com.dfc.deliveryfeecalculator.controller;
+package com.dfc.deliveryfeecalculator.WeatherInfo;
 
-import com.dfc.deliveryfeecalculator.model.WeatherInfo;
-import com.dfc.deliveryfeecalculator.repository.WeatherInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-public class WeatherInfoController {
+@Service
+public class WeatherInfoService {
+
+    private final WeatherInfoRepository weatherInfoRepository;
 
     @Autowired
-    private WeatherInfoRepository weatherInfoRepository;
+    public WeatherInfoService(WeatherInfoRepository weatherInfoRepository) {
+        this.weatherInfoRepository = weatherInfoRepository;
+    }
 
-    @GetMapping("/getAllWeatherInfo")
     public ResponseEntity<List<WeatherInfo>> getAllWeatherInfo(){
         try {
             List<WeatherInfo> weatherInfoList = new ArrayList<>(weatherInfoRepository
@@ -31,7 +33,6 @@ public class WeatherInfoController {
         }
     }
 
-    @GetMapping("/getWeatherInfoById/{id}")
     public ResponseEntity<WeatherInfo> getWeatherInfoById(@PathVariable Long id){
         try {
             Optional<WeatherInfo> weatherInfoOptional =  weatherInfoRepository.findById(id);
@@ -43,7 +44,6 @@ public class WeatherInfoController {
 
     }
 
-    @PostMapping("/addWeatherInfo")
     public ResponseEntity<WeatherInfo> addWeatherInfo(@RequestBody WeatherInfo weatherInfo) {
         try {
             WeatherInfo weatherInfoObject = weatherInfoRepository.save(weatherInfo);
@@ -53,7 +53,6 @@ public class WeatherInfoController {
         }
     }
 
-    @PostMapping("/updateWeatherInfoById/{id}")
     public ResponseEntity<WeatherInfo> updateWeatherInfoById(@PathVariable Long id, @RequestBody WeatherInfo newWeatherInfoData) {
         try {
             Optional<WeatherInfo> oldWeatherInfoData = weatherInfoRepository.findById(id);
@@ -75,7 +74,6 @@ public class WeatherInfoController {
         }
     }
 
-    @DeleteMapping("/deleteWeatherInfoById/{id}")
     public ResponseEntity<HttpStatus> deleteWeatherInfoById(@PathVariable Long id) {
         try {
             weatherInfoRepository.deleteById(id);
@@ -85,4 +83,5 @@ public class WeatherInfoController {
         }
 
     }
+
 }

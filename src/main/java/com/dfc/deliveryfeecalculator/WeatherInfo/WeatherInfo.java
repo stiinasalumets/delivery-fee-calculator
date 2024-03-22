@@ -1,4 +1,4 @@
-package com.dfc.deliveryfeecalculator.model;
+package com.dfc.deliveryfeecalculator.WeatherInfo;
 
 
 import jakarta.persistence.Entity;
@@ -8,14 +8,24 @@ import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.Date;
+
 @Entity
 @Table(name="WeatherInfo")
-@NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 @ToString
 public class WeatherInfo {
+
+    public WeatherInfo(String name, Integer wmo, Float temperature, Float wind, String phenomenon) {
+        this.name = name;
+        this.wmo = wmo;
+        this.temperature = temperature;
+        this.wind = wind;
+        this.phenomenon = phenomenon;
+        this.time = new Date();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,5 +34,5 @@ public class WeatherInfo {
     private Float temperature;
     private Float wind;
     private String phenomenon;
-    private Integer time;
+    private Date time;
 }
