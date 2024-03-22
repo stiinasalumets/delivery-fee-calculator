@@ -12,6 +12,8 @@ import java.util.Date;
 
 @Entity
 @Table(name="WeatherInfo")
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 @ToString
