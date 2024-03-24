@@ -1,5 +1,7 @@
 package com.dfc.deliveryfeecalculator;
 
+import com.dfc.deliveryfeecalculator.AirTemperatureFee.AirTemperatureFee;
+import com.dfc.deliveryfeecalculator.AirTemperatureFee.AirTemperatureFeeService;
 import com.dfc.deliveryfeecalculator.DeliveryFeeCalculatorApplication;
 import com.dfc.deliveryfeecalculator.RegionalBaseFee.RegionalBaseFee;
 import com.dfc.deliveryfeecalculator.RegionalBaseFee.RegionalBaseFeeRepository;
@@ -7,6 +9,8 @@ import com.dfc.deliveryfeecalculator.WeatherInfo.Observations;
 import com.dfc.deliveryfeecalculator.WeatherInfo.Station;
 import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfo;
 import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfoRepository;
+import com.dfc.deliveryfeecalculator.WindSpeedFee.WindSpeedFee;
+import com.dfc.deliveryfeecalculator.WindSpeedFee.WindSpeedFeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +31,14 @@ public class WeatherUpdater {
 
     Logger logger = LoggerFactory.getLogger(DeliveryFeeCalculatorApplication.class);
     private final WeatherInfoRepository weatherInfoRepository;
+    private final AirTemperatureFeeService airTemperatureFeeService;
+    private final WindSpeedFeeService windSpeedFeeService;
 
     @Autowired
-    public WeatherUpdater(WeatherInfoRepository weatherInfoRepository) {
+    public WeatherUpdater(WeatherInfoRepository weatherInfoRepository, AirTemperatureFeeService airTemperatureFeeService, WindSpeedFeeService windSpeedFeeService) {
         this.weatherInfoRepository = weatherInfoRepository;
+        this.airTemperatureFeeService = airTemperatureFeeService;
+        this.windSpeedFeeService = windSpeedFeeService;
     }
 
     public WeatherInfo currentWeatherInfoInCity(String cityName) {
@@ -69,4 +77,12 @@ public class WeatherUpdater {
     public void scheduledAddWeatherInfo() {
         addWeatherInfo();
     }
+
+    @Scheduled(cron = "0 * * * * *")
+    public void test() {
+        String vehicleType = "Scooter";
+        String cityName = "Tallinn-Harku";
+
+    }
+
 }

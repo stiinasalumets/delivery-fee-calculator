@@ -32,13 +32,5 @@ public class WeatherInfoController {
         return weatherInfoService.addWeatherInfo(weatherInfo);
     }
 
-    @PostMapping("/updateWeatherInfoById/{id}")
-    public ResponseEntity<WeatherInfo> updateWeatherInfoById(@PathVariable Long id, @RequestBody WeatherInfo newWeatherInfoData) {
-        return weatherInfoService.updateWeatherInfoById(id, newWeatherInfoData);
-    }
 
-    @DeleteMapping("/deleteWeatherInfoById/{id}")
-    public ResponseEntity<HttpStatus> deleteWeatherInfoById(@PathVariable Long id) {
-        return weatherInfoService.deleteWeatherInfoById(id);
-    }
 }

@@ -1,9 +1,6 @@
 package com.dfc.deliveryfeecalculator.AirTemperatureFee;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -27,10 +24,15 @@ public class AirTemperatureFee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private Float lowerTemperature;
+    @Column(nullable = false)
     private Float higherTemperature;
+    @Column(nullable = false)
     private Float lowestRangeFee;
+    @Column(nullable = false)
     private Float middleRangeFee;
+    @Column(nullable = false)
     private Float highestRangeFee;
 
 }

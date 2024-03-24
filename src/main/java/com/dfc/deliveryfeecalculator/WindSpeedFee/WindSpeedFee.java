@@ -16,11 +16,11 @@ import org.springframework.data.relational.core.mapping.Table;
 @ToString
 public class WindSpeedFee {
 
-    public WindSpeedFee(Float lowerWindSpeed, Float higherWindSpeed, Float middleWindSRange, Float highestWindRange) {
+    public WindSpeedFee(Float lowerWindSpeed, Float higherWindSpeed, Float middleWindRange, Float lowestWindRange) {
         this.lowerWindSpeed = lowerWindSpeed;
         this.higherWindSpeed = higherWindSpeed;
-        this.middleWindSRange = middleWindSRange;
-        this.highestWindRange = highestWindRange;
+        this.middleWindRange = middleWindRange;
+        this.lowestWindRange = lowestWindRange;
     }
 
     @Id
@@ -28,7 +28,7 @@ public class WindSpeedFee {
     private Long id;
     private Float lowerWindSpeed;
     private Float higherWindSpeed;
-    private Float middleWindSRange;
-    private Float highestWindRange;
+    private Float middleWindRange;
+    private Float lowestWindRange;
 
 }

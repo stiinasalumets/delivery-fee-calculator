@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(path = "/api/v1/WeatherPhenomenonFee")
 public class WeatherPhenomenonFeeController {
@@ -19,10 +17,8 @@ public class WeatherPhenomenonFeeController {
         this.weatherPhenomenonFeeService = weatherPhenomenonFeeService;
     }
 
-    @GetMapping("/getAllWeatherPhenomenonFee")
-    public ResponseEntity<List<WeatherPhenomenonFee>> getAllWeatherPhenomenonFee(){
-        return weatherPhenomenonFeeService.getAllWeatherPhenomenonFee();
+    @GetMapping("/getWeatherPhenomenonFee")
+    public ResponseEntity<WeatherPhenomenonFee> getWeatherPhenomenonFee(){
+        return weatherPhenomenonFeeService.getWeatherPhenomenonFee();
     }
-
-
 }

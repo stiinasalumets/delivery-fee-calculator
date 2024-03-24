@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AirTemperatureFeeService {
@@ -17,14 +18,10 @@ public class AirTemperatureFeeService {
         this.airTemperatureFeeRepository = airTemperatureFeeRepository;
     }
 
-    public ResponseEntity<List<AirTemperatureFee>> getAllAirTemperatureFee(){
+    public ResponseEntity<AirTemperatureFee> getAirTemperatureFee(){
         try {
-            List<AirTemperatureFee> airTemperatureFeeList = new ArrayList<>(airTemperatureFeeRepository
-                    .findAll());
-            if (airTemperatureFeeList.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(airTemperatureFeeList, HttpStatus.OK);
+            Optional<AirTemperatureFee> airTemperatureFee = airTemperatureFeeRepository.findById(1L);
+            return airTemperatureFee.map(temperatureFee -> new ResponseEntity<>(temperatureFee, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

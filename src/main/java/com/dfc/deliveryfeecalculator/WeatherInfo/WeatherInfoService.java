@@ -53,27 +53,6 @@ public class WeatherInfoService {
         }
     }
 
-    public ResponseEntity<WeatherInfo> updateWeatherInfoById(@PathVariable Long id, @RequestBody WeatherInfo newWeatherInfoData) {
-        try {
-            Optional<WeatherInfo> oldWeatherInfoData = weatherInfoRepository.findById(id);
-            if (oldWeatherInfoData.isPresent()) {
-                WeatherInfo updatedWeatherInfo = oldWeatherInfoData.get();
-                updatedWeatherInfo.setWmo(newWeatherInfoData.getWmo());
-                updatedWeatherInfo.setWind(newWeatherInfoData.getWind());
-                updatedWeatherInfo.setTime(newWeatherInfoData.getTime());
-                updatedWeatherInfo.setName(newWeatherInfoData.getName());
-                updatedWeatherInfo.setPhenomenon(newWeatherInfoData.getPhenomenon());
-                updatedWeatherInfo.setTemperature(newWeatherInfoData.getTemperature());
-
-                WeatherInfo weatherInfoObject = weatherInfoRepository.save(updatedWeatherInfo);
-                return new ResponseEntity<>(weatherInfoObject, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     public ResponseEntity<HttpStatus> deleteWeatherInfoById(@PathVariable Long id) {
         try {
             weatherInfoRepository.deleteById(id);
