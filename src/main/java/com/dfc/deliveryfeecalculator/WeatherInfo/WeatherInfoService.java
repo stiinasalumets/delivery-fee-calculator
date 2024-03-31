@@ -53,14 +53,4 @@ public class WeatherInfoService {
         }
     }
 
-    public ResponseEntity<HttpStatus> deleteWeatherInfoById(@PathVariable Long id) {
-        try {
-            weatherInfoRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
-
 }

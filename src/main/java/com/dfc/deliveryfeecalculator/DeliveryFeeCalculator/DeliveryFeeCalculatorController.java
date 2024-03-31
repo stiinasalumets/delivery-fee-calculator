@@ -1,18 +1,17 @@
 package com.dfc.deliveryfeecalculator.DeliveryFeeCalculator;
 
-import com.dfc.deliveryfeecalculator.AirTemperatureFee.AirTemperatureFee;
-import com.dfc.deliveryfeecalculator.AirTemperatureFee.AirTemperatureFeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Date;
 
 @RestController
-@RequestMapping(path = "/api/v1/DeliveryFeeCalculator")
+@RequestMapping
 public class DeliveryFeeCalculatorController {
 
     private final DeliveryFeeCalculatorService deliveryFeeCalculatorService;
@@ -23,8 +22,8 @@ public class DeliveryFeeCalculatorController {
     }
 
     @GetMapping("/getDeliveryFee")
-    public ResponseEntity<Float> getDeliveryFee(@RequestParam String city, @RequestParam String vehicle){
-        return deliveryFeeCalculatorService.getDeliveryFee(city, vehicle);
+    public ResponseEntity<Float> getDeliveryFee(@RequestParam String city, @RequestParam String vehicle, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+        return deliveryFeeCalculatorService.getDeliveryFee(city, vehicle, date);
     }
 
 }

@@ -6,9 +6,7 @@ import com.dfc.deliveryfeecalculator.RegionalBaseFee.RegionalBaseFee;
 import com.dfc.deliveryfeecalculator.RegionalBaseFee.RegionalBaseFeeService;
 import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfo;
 import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfoRepository;
-import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfoService;
 import com.dfc.deliveryfeecalculator.WeatherPhenomenonFee.WeatherPhenomenonFee;
-import com.dfc.deliveryfeecalculator.WeatherPhenomenonFee.WeatherPhenomenonFeeRepository;
 import com.dfc.deliveryfeecalculator.WeatherPhenomenonFee.WeatherPhenomenonFeeService;
 import com.dfc.deliveryfeecalculator.WindSpeedFee.WindSpeedFee;
 import com.dfc.deliveryfeecalculator.WindSpeedFee.WindSpeedFeeService;
@@ -17,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,27 +23,33 @@ public class DeliveryFeeCalculatorService {
 
     private final AirTemperatureFeeService airTemperatureFeeService;
     private final RegionalBaseFeeService regionalBaseFeeService;
-    private final WeatherInfoService weatherInfoService;
     private final WeatherInfoRepository weatherInfoRepository;
-    private final WeatherPhenomenonFeeRepository weatherPhenomenonFeeRepository;
     private final WeatherPhenomenonFeeService weatherPhenomenonFeeService;
     private final WindSpeedFeeService windSpeedFeeService;
 
     @Autowired
-    public DeliveryFeeCalculatorService(AirTemperatureFeeService airTemperatureFeeService, RegionalBaseFeeService regionalBaseFeeService, WeatherInfoService weatherInfoService, WeatherPhenomenonFeeService weatherPhenomenonFeeService, WindSpeedFeeService windSpeedFeeService, WeatherInfoRepository weatherInfoRepository, WeatherPhenomenonFeeRepository weatherPhenomenonFeeRepository) {
+    public DeliveryFeeCalculatorService(AirTemperatureFeeService airTemperatureFeeService, RegionalBaseFeeService regionalBaseFeeService, WeatherPhenomenonFeeService weatherPhenomenonFeeService, WindSpeedFeeService windSpeedFeeService, WeatherInfoRepository weatherInfoRepository) {
         this.airTemperatureFeeService = airTemperatureFeeService;
         this.regionalBaseFeeService = regionalBaseFeeService;
-        this.weatherInfoService = weatherInfoService;
         this.weatherInfoRepository = weatherInfoRepository;
         this.weatherPhenomenonFeeService = weatherPhenomenonFeeService;
         this.windSpeedFeeService = windSpeedFeeService;
-        this.weatherPhenomenonFeeRepository = weatherPhenomenonFeeRepository;
     }
 
     public WeatherInfo latestInfoFromCity(String cityName) throws ClassNotFoundException {
         List<WeatherInfo> latestWeatherUpdates = weatherInfoRepository.findTop3ByOrderByTimeDesc();
         for (WeatherInfo weatherInfo : latestWeatherUpdates) {
-            if (weatherInfo.getName().equals(cityName)) {
+            if (weatherInfo.getName().contains(cityName)) {
+                return weatherInfo;
+            }
+        }
+        throw new ClassNotFoundException("Could not find Weather Data with city name " + cityName);
+    }
+
+    public WeatherInfo infoFromCityAtDate(String cityName, Date date) throws ClassNotFoundException {
+        List<WeatherInfo> latestWeatherUpdates = weatherInfoRepository.findTop3ByTimeAfterOrderByTimeAsc(date);
+        for (WeatherInfo weatherInfo : latestWeatherUpdates) {
+            if (weatherInfo.getName().contains(cityName)) {
                 return weatherInfo;
             }
         }
@@ -111,7 +116,7 @@ public class DeliveryFeeCalculatorService {
                     result = weatherPhenomenonFee.getSleetFee();
                 } else if (phenomenon.contains("snow")) {
                     result = weatherPhenomenonFee.getSnowFee();
-                } else if (phenomenon.contains("glaze") || phenomenon.contains("hail") || phenomenon.contains("thunder")){
+                } else if (phenomenon.contains("glaze") || phenomenon.contains("hail") || phenomenon.contains("thunder")) {
                     throw new Exception("Usage of selected vehicle type is forbidden");
                 }
             }
@@ -121,7 +126,7 @@ public class DeliveryFeeCalculatorService {
         return result;
     }
 
-    public Float calculateRegionalBaseFee(String cityName, String vehicleType){
+    public Float calculateRegionalBaseFee(String cityName, String vehicleType) {
         Float result = 0F;
         try {
             RegionalBaseFee regionalBaseFee = regionalBaseFeeService.getRegionalBaseFee(cityName).getBody();
@@ -137,11 +142,16 @@ public class DeliveryFeeCalculatorService {
         return result;
     }
 
-    public ResponseEntity<Float> getDeliveryFee(String cityName, String vehicleType) {
+    public ResponseEntity<Float> getDeliveryFee(String cityName, String vehicleType, Date date) {
         Float result = 0F;
         try {
+            WeatherInfo weatherInfo;
+            if (date != null) {
+                weatherInfo = infoFromCityAtDate(cityName, date);
+            } else {
+                weatherInfo = latestInfoFromCity(cityName);
+            }
             vehicleType = vehicleType.toLowerCase();
-            WeatherInfo weatherInfo = latestInfoFromCity(cityName);
             result += calculateAirTemperatureFee(weatherInfo, vehicleType);
             result += calculateWindSpeedFee(weatherInfo, vehicleType);
             result += calculateWeatherPhenomenonFee(weatherInfo, vehicleType);
@@ -151,5 +161,7 @@ public class DeliveryFeeCalculatorService {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }
 

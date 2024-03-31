@@ -1,18 +1,9 @@
 package com.dfc.deliveryfeecalculator;
 
-import com.dfc.deliveryfeecalculator.AirTemperatureFee.AirTemperatureFee;
-import com.dfc.deliveryfeecalculator.AirTemperatureFee.AirTemperatureFeeService;
-import com.dfc.deliveryfeecalculator.DeliveryFeeCalculatorApplication;
-import com.dfc.deliveryfeecalculator.RegionalBaseFee.RegionalBaseFee;
-import com.dfc.deliveryfeecalculator.RegionalBaseFee.RegionalBaseFeeRepository;
 import com.dfc.deliveryfeecalculator.WeatherInfo.Observations;
 import com.dfc.deliveryfeecalculator.WeatherInfo.Station;
 import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfo;
 import com.dfc.deliveryfeecalculator.WeatherInfo.WeatherInfoRepository;
-import com.dfc.deliveryfeecalculator.WindSpeedFee.WindSpeedFee;
-import com.dfc.deliveryfeecalculator.WindSpeedFee.WindSpeedFeeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -22,23 +13,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
 import java.util.List;
 
 @Component
 @EnableScheduling
 public class WeatherUpdater {
 
-    Logger logger = LoggerFactory.getLogger(DeliveryFeeCalculatorApplication.class);
     private final WeatherInfoRepository weatherInfoRepository;
-    private final AirTemperatureFeeService airTemperatureFeeService;
-    private final WindSpeedFeeService windSpeedFeeService;
 
     @Autowired
-    public WeatherUpdater(WeatherInfoRepository weatherInfoRepository, AirTemperatureFeeService airTemperatureFeeService, WindSpeedFeeService windSpeedFeeService) {
+    public WeatherUpdater(WeatherInfoRepository weatherInfoRepository) {
         this.weatherInfoRepository = weatherInfoRepository;
-        this.airTemperatureFeeService = airTemperatureFeeService;
-        this.windSpeedFeeService = windSpeedFeeService;
     }
 
     public WeatherInfo currentWeatherInfoInCity(String cityName) {
