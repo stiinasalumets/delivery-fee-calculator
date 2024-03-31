@@ -18,7 +18,7 @@ public class WeatherPhenomenonFeeController {
     }
 
     @GetMapping("/getWeatherPhenomenonFee")
-    public ResponseEntity<WeatherPhenomenonFee> getWeatherPhenomenonFee(){
+    public ResponseEntity<WeatherPhenomenonFee> getWeatherPhenomenonFee() {
         return weatherPhenomenonFeeService.getWeatherPhenomenonFee();
     }
 }

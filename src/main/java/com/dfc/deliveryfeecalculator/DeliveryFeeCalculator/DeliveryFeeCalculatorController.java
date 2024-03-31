@@ -22,8 +22,7 @@ public class DeliveryFeeCalculatorController {
     }
 
     @GetMapping("/getDeliveryFee")
-    public ResponseEntity<Float> getDeliveryFee(@RequestParam String city, @RequestParam String vehicle, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+    public ResponseEntity<Float> getDeliveryFee(@RequestParam String city, @RequestParam String vehicle, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd-HH") Date date) {
         return deliveryFeeCalculatorService.getDeliveryFee(city, vehicle, date);
     }
-
 }

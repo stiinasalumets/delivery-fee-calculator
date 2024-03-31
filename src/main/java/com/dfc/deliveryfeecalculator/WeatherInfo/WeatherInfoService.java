@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class WeatherInfoService {
         this.weatherInfoRepository = weatherInfoRepository;
     }
 
-    public ResponseEntity<List<WeatherInfo>> getAllWeatherInfo(){
+    public ResponseEntity<List<WeatherInfo>> getAllWeatherInfo() {
         try {
             List<WeatherInfo> weatherInfoList = new ArrayList<>(weatherInfoRepository
                     .findAll());
@@ -33,9 +34,9 @@ public class WeatherInfoService {
         }
     }
 
-    public ResponseEntity<WeatherInfo> getWeatherInfoById(@PathVariable Long id){
+    public ResponseEntity<WeatherInfo> getWeatherInfoById(@PathVariable Long id) {
         try {
-            Optional<WeatherInfo> weatherInfoOptional =  weatherInfoRepository.findById(id);
+            Optional<WeatherInfo> weatherInfoOptional = weatherInfoRepository.findById(id);
             return weatherInfoOptional.map(weatherInfo -> new ResponseEntity<>(weatherInfo, HttpStatus.OK)).orElseGet(()
                     -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {

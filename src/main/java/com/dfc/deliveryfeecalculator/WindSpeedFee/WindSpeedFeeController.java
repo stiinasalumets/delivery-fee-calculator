@@ -18,7 +18,7 @@ public class WindSpeedFeeController {
     }
 
     @GetMapping("/getAllWindSpeedFee")
-    public ResponseEntity<WindSpeedFee> getWindSpeedFee(){
+    public ResponseEntity<WindSpeedFee> getWindSpeedFee() {
         return windSpeedFeeService.getWindSpeedFee();
     }
 

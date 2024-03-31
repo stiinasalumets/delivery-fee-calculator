@@ -18,9 +18,7 @@ public class AirTemperatureFeeController {
     }
 
     @GetMapping("/getAllAirTemperatureFee")
-    public ResponseEntity<AirTemperatureFee> getAirTemperatureFee(){
+    public ResponseEntity<AirTemperatureFee> getAirTemperatureFee() {
         return airTemperatureFeeService.getAirTemperatureFee();
     }
-
-
 }

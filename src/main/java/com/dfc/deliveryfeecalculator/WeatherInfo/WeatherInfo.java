@@ -11,7 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="WeatherInfo")
+@Table(name = "WeatherInfo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

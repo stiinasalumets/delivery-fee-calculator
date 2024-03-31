@@ -1,6 +1,5 @@
 package com.dfc.deliveryfeecalculator.WeatherInfo;
 
-import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -11,7 +10,6 @@ public class Station {
     private String phenomenon;
     private Float temperature;
     private Float wind;
-
 
 
     @XmlElement(name = "name")

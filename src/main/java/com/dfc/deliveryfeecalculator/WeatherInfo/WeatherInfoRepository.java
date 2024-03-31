@@ -10,6 +10,7 @@ import java.util.List;
 public interface WeatherInfoRepository extends JpaRepository<WeatherInfo, Long> {
 
     List<WeatherInfo> findTop3ByOrderByTimeDesc();
+
     List<WeatherInfo> findTop3ByTimeAfterOrderByTimeAsc(Date date);
 
 }

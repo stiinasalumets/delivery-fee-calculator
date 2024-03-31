@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,7 +16,7 @@ public class AirTemperatureFeeService {
         this.airTemperatureFeeRepository = airTemperatureFeeRepository;
     }
 
-    public ResponseEntity<AirTemperatureFee> getAirTemperatureFee(){
+    public ResponseEntity<AirTemperatureFee> getAirTemperatureFee() {
         try {
             Optional<AirTemperatureFee> airTemperatureFee = airTemperatureFeeRepository.findById(1L);
             return airTemperatureFee.map(temperatureFee -> new ResponseEntity<>(temperatureFee, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));

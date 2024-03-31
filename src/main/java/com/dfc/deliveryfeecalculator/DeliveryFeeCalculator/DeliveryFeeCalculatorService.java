@@ -161,7 +161,4 @@ public class DeliveryFeeCalculatorService {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
 }
-

@@ -19,9 +19,7 @@ public class RegionalBaseFeeController {
     }
 
     @GetMapping("/getAllRegionalBaseFee/{cityName}")
-    public ResponseEntity<RegionalBaseFee> getRegionalBaseFee(@PathVariable String cityName){
+    public ResponseEntity<RegionalBaseFee> getRegionalBaseFee(@PathVariable String cityName) {
         return regionalBaseFeeService.getRegionalBaseFee(cityName);
     }
-
-
 }

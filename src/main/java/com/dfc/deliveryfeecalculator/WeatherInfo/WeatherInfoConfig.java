@@ -7,20 +7,17 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 
-
 @Component
 public class WeatherInfoConfig implements ApplicationRunner {
 
-    private WeatherInfoRepository weatherInfoRepository;
-    private WeatherUpdater weatherUpdater;
+    private final WeatherUpdater weatherUpdater;
 
     @Autowired
-    public WeatherInfoConfig(WeatherInfoRepository weatherInfoRepository, WeatherUpdater weatherUpdater) {
-        this.weatherInfoRepository = weatherInfoRepository;
+    public WeatherInfoConfig(WeatherUpdater weatherUpdater) {
         this.weatherUpdater = weatherUpdater;
     }
 
     public void run(ApplicationArguments args) {
         weatherUpdater.addWeatherInfo();
-         }
+    }
 }

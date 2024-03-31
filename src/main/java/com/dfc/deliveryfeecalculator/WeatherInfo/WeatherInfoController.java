@@ -1,9 +1,13 @@
 package com.dfc.deliveryfeecalculator.WeatherInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,12 +22,12 @@ public class WeatherInfoController {
     }
 
     @GetMapping("/getAllWeatherInfo")
-    public ResponseEntity<List<WeatherInfo>> getAllWeatherInfo(){
+    public ResponseEntity<List<WeatherInfo>> getAllWeatherInfo() {
         return weatherInfoService.getAllWeatherInfo();
     }
 
     @GetMapping("/getWeatherInfoById/{id}")
-    public ResponseEntity<WeatherInfo> getWeatherInfoById(@PathVariable Long id){
+    public ResponseEntity<WeatherInfo> getWeatherInfoById(@PathVariable Long id) {
         return weatherInfoService.getWeatherInfoById(id);
     }
 
