@@ -25,4 +25,21 @@ public class WeatherPhenomenonFeeService {
         }
     }
 
+    public ResponseEntity<WeatherPhenomenonFee> updateWeatherPhenomenonFee(WeatherPhenomenonFee newWeatherPhenomenonFee) {
+        try {
+            Optional<WeatherPhenomenonFee> existingWeatherPhenomenonFee = weatherPhenomenonFeeRepository.findById(1L);
+            if (existingWeatherPhenomenonFee.isPresent()) {
+                WeatherPhenomenonFee weatherPhenomenonFee = existingWeatherPhenomenonFee.get();
+                weatherPhenomenonFee.setRainFee(newWeatherPhenomenonFee.getRainFee());
+                weatherPhenomenonFee.setSleetFee(newWeatherPhenomenonFee.getSleetFee());
+                weatherPhenomenonFee.setSnowFee(newWeatherPhenomenonFee.getSnowFee());
+                weatherPhenomenonFeeRepository.save(weatherPhenomenonFee);
+                return new ResponseEntity<>(weatherPhenomenonFee, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

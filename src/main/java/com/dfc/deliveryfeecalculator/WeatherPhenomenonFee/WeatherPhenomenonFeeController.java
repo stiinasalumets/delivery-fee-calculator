@@ -2,9 +2,7 @@ package com.dfc.deliveryfeecalculator.WeatherPhenomenonFee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/WeatherPhenomenonFee")
@@ -20,5 +18,10 @@ public class WeatherPhenomenonFeeController {
     @GetMapping("/getWeatherPhenomenonFee")
     public ResponseEntity<WeatherPhenomenonFee> getWeatherPhenomenonFee() {
         return weatherPhenomenonFeeService.getWeatherPhenomenonFee();
+    }
+
+    @PostMapping("/updateWeatherPhenomenonFee")
+    public ResponseEntity<WeatherPhenomenonFee> updateWeatherPhenomenonFee(@RequestBody WeatherPhenomenonFee newWeatherPhenomenonFee) {
+        return weatherPhenomenonFeeService.updateWeatherPhenomenonFee(newWeatherPhenomenonFee);
     }
 }

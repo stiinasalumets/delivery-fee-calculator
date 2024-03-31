@@ -24,4 +24,23 @@ public class WindSpeedFeeService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<WindSpeedFee> updateWindSpeedFee(WindSpeedFee newWindSpeedFee) {
+        try {
+            Optional<WindSpeedFee> existingWindSpeedFee = windSpeedFeeRepository.findById(1L);
+            if (existingWindSpeedFee.isPresent()) {
+                WindSpeedFee windSpeedFee = existingWindSpeedFee.get();
+                windSpeedFee.setLowerWindSpeed(newWindSpeedFee.getLowerWindSpeed());
+                windSpeedFee.setHigherWindSpeed(newWindSpeedFee.getHigherWindSpeed());
+                windSpeedFee.setMiddleWindRange(newWindSpeedFee.getMiddleWindRange());
+                windSpeedFee.setLowestWindRange(newWindSpeedFee.getLowestWindRange());
+                windSpeedFeeRepository.save(windSpeedFee);
+                return new ResponseEntity<>(windSpeedFee, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

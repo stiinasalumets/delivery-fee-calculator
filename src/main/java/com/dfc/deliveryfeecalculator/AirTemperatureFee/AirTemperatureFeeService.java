@@ -24,4 +24,24 @@ public class AirTemperatureFeeService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<AirTemperatureFee> updateAirTemperatureFee(AirTemperatureFee newAirTemperatureFee) {
+        try {
+            Optional<AirTemperatureFee> existingAirTemperatureFee = airTemperatureFeeRepository.findById(1L);
+            if (existingAirTemperatureFee.isPresent()) {
+                AirTemperatureFee airTemperatureFee = existingAirTemperatureFee.get();
+                airTemperatureFee.setLowerTemperature(newAirTemperatureFee.getLowerTemperature());
+                airTemperatureFee.setHigherTemperature(newAirTemperatureFee.getHigherTemperature());
+                airTemperatureFee.setLowestRangeFee(newAirTemperatureFee.getLowestRangeFee());
+                airTemperatureFee.setMiddleRangeFee(newAirTemperatureFee.getMiddleRangeFee());
+                airTemperatureFee.setHighestRangeFee(newAirTemperatureFee.getHighestRangeFee());
+                airTemperatureFeeRepository.save(airTemperatureFee);
+                return new ResponseEntity<>(airTemperatureFee, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

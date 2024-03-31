@@ -24,4 +24,22 @@ public class RegionalBaseFeeService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<RegionalBaseFee> updateRegionalBaseFee(String cityName, RegionalBaseFee newRegionalBaseFee) {
+        try {
+            Optional<RegionalBaseFee> existingBaseFee = regionalBaseFeeRepository.findById(cityName);
+            if (existingBaseFee.isPresent()) {
+                RegionalBaseFee baseFee = existingBaseFee.get();
+                baseFee.setCarFee(newRegionalBaseFee.getCarFee());
+                baseFee.setScooterFee(newRegionalBaseFee.getScooterFee());
+                baseFee.setBikeFee(newRegionalBaseFee.getBikeFee());
+                regionalBaseFeeRepository.save(baseFee);
+                return new ResponseEntity<>(baseFee, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
